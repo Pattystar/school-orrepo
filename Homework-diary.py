@@ -1,4 +1,4 @@
-def menu(a):
+def menu():
     
     print("Ежедневник. Выберите действие: ")
 
@@ -23,6 +23,7 @@ def menu(a):
         with open('task_list.txt', 'r') as f:
             print(f.read())
             f.seek(0)
+    menu()
 
     if num == 2:    
         with open('task_list.txt', 'w') as f:
@@ -31,6 +32,7 @@ def menu(a):
         with open('task_list.txt', 'r') as f:
             print(f.read())
             f.seek(0)
+    menu()
 
     if num == 3:    
         with open('task_list.txt', 'w') as f:
@@ -47,6 +49,7 @@ def menu(a):
         with open('task_list.txt', 'r') as f:
             print(f.read())
             f.seek(0)
+    menu()
 
     if num == 5:    
         with open('task_list.txt', 'w') as f:
@@ -55,6 +58,7 @@ def menu(a):
         with open('task_list.txt', 'r') as f:
             print(f.read())
             f.seek(0)
+    menu()
 
     if num == 6:    
         with open('task_list.txt', 'w') as f:
@@ -63,6 +67,6 @@ def menu(a):
         with open('task_list.txt', 'r') as f:
             print(f.read())
             f.seek(0)
+            
 
-menu(menu(2))
 
