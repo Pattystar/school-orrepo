@@ -3,32 +3,32 @@ import os.path as Path
 
 sql = '''
     CREATE TABLE diary(
-        ID INT PRIMARY KEY NOT NULL,
+        TASK_ID INT PRIMARY KEY NOT NULL,
         TASK_TEXT TEXT NOT NULL,
         TASK_TIME INT NOT NULL,
         TASK_STATUS TEXT NOT NULL,
     )'''  # создал список
 
 SQL_SELECT_ALL =
-    SELECT id, task_text, task_time, task_status
+    SELECT task_id, task_text, task_time, task_status
     FROM diary
 
-SQL_SELECT_TASK_BY_PK = SQL_SELECT_ALL + ' WHERE id=?'
+SQL_SELECT_TASK_BY_PK = SQL_SELECT_ALL + ' WHERE task_id=?'
 
 SQL_RED_TASK =
     UPDATE diary
-    SET(id, task_text, task_time, task_status) + ' WHERE id=?'
+    SET(task_id, task_text, task_time, task_status) + ' WHERE task_id=?'
 
 SQL_REST_TASK =
     UPDATE diary
-    SET task_status = 'Не выполнено' + ' WHERE id=?'
+    SET task_status = 'Не выполнено' + ' WHERE task_id=?'
 
 SQL_EXIT_TASK =
     UPDATE diary
-    SET task_status = 'Выполнено' + ' WHERE id=?'
+    SET task_status = 'Выполнено' + ' WHERE task_id=?'
 
 SQL_INSERT_TASK =
-    INSERT INTO dairy (id, task_text, task_time, task_status)
+    INSERT INTO dairy (task_id, task_text, task_time, task_status)
     VALUES (?, ?, ?, ?)
 
 
@@ -58,21 +58,15 @@ def initialize(conn):
 
 def add_task(conn, task_text, task_time, task_status):# добавить задачу
 
-    if not task:
-        return
+    with conn:
+        cursor = conn.execute(SQL_INSERT_TASK, (task_id, task_text, task_time, task_status))
+        cursor.commit()
+
+
+def red_task(conn, task_id, task_text, task_time, task_status):# редактировать задачу
 
     with conn:
-        cursor = conn.execute(SQL_INSERT_TASK, (id, task_text, task_time, task_status))
-        return
-
-
-def red_task(conn, id, task_text, task_time, task_status):# редактировать задачу
-
-    if not task:
-        return
-
-    with conn:
-        cursor = conn.execute(SQL_RED_TASK, (id, task_text, task_time, task_status))
+        cursor = conn.execute(SQL_RED_TASK, (task_text, task_time, task_status, task_id,))
         return
 
 def find_all(conn):  # список задач
@@ -81,13 +75,15 @@ def find_all(conn):  # список задач
         return cursor.fetchall()
 
 
-def rest_task(conn, id): # найти задачу по ид
+def rest_task(conn, id): # начать заново
     with conn:
-        cursor = conn.execute(SQL_REST, (id,))
+        cursor = conn.execute(SQL_REST, (task_id,))
 
 
-def exit_task_(conn, id):  # найти задачу по статусу
+def exit_task_(conn, task_id):  # завершить задачу
     with conn:
-        cursor = conn.execute(SQL_EXIT, (id,))
+        cursor = conn.execute(SQL_EXIT, (task_id,))
+        cursor.commit()
+      
 
 
