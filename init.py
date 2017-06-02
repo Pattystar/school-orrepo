@@ -3,41 +3,31 @@ import sys
 
 from diary import storage
 
-#def get_connection():
-# return storage.connect('shortener.sqlite')
 get_connection = lambda: storage.connect('diary.sqlite')
 
 def action_add():
-    ok = False
-
-    while not ok:
-        task = input('\nВведите задачу: ')
-
-        if not task:
-            break
-
-        ok = True
+    print('''Добавление  задачи:
+''')
+    storage.add_task()
 
 
 def action_red():
-    ok = False
-
-    while not ok:
-        task = input('\nОтредактируйте задачу: ')
-
-        if not task:
-            break
-
-        ok = True
+    print('''Редактирование задачи:
+''')
+    storage.red_task()
+    
+def action_exit_task():
+    print('''Завершение задачи:
+''')
+    storage.exit_task()
 
 
 def action_find_all():
-    """Обработчик действия показать все ссылки"""
-    with get_connection() as conn:
-        task = storage.find_all(conn)
+    print('''Список задач:
+''')
+    storage.find_all()
 
-    for task in tasks:
-        print('{task[task]} - {task[task_time]} - {task[task_status]} '.format(task=task))
+    
 
 
 def action_show_menu():
@@ -48,12 +38,15 @@ def action_show_menu():
 3. Отредактировать задачу
 4. Завершить задачу
 5. Начать задачу сначала
-6. Выход''')
+6. Выход
+''')
 
 
 def action_exit():
     """Обработчик действия выйти"""
     sys.exit(0)
+    
+
 
     action_id = input('Введите номер действия: ')
     if action_id not in ['1', '2', '3', '4', '5', '6']:
@@ -63,22 +56,22 @@ def action_exit():
         action_id = int(action_id)
 
     if action_id == 1:
-        Tasks.show_tasks()
+        action_find_all()
         menu()
     elif action_id == 2:
-        Tasks.add_task()
+        action_add_task()
         menu()
     elif action_id == 3:
-        Tasks.edit_task()
+        action_red_task()
         menu()
     elif action_id == 4:
-        Tasks.close_task()
+        action_exit_task()
         menu()
     elif action_id == 5:
-        Tasks.reopen_task()
+        action_rest_task()
         menu()
     elif action_id == 6:
-        Tasks.diary_exit()
+        action_exit()
 
 menu()
 
