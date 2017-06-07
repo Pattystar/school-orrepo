@@ -3,10 +3,10 @@ import os.path as Path
 
 sql = '''
     CREATE TABLE diary(
-        TASK_ID INT PRIMARY KEY NOT NULL,
-        TASK_TEXT TEXT NOT NULL,
-        TASK_TIME INT NOT NULL,
-        TASK_STATUS TEXT NOT NULL,
+        task_id INT PRIMARY KEY AUTOINCREMENT,
+        task_text TEXT NOT NULL,
+        task_time INT NOT NULL,
+        task_status TEXT NOT NULL,
     )'''  # создал список
 
 SQL_SELECT_ALL =
@@ -60,7 +60,7 @@ def add_task(conn, task_text, task_time, task_status):# добавить зад�
 
     with conn:
         cursor = conn.execute(SQL_INSERT_TASK, (task_id, task_text, task_time, task_status))
-        cursor.commit()
+        cursor.commit() 
 
 
 def red_task(conn, task_id, task_text, task_time, task_status):# редактировать задачу
