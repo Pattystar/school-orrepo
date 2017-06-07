@@ -1,4 +1,3 @@
-# Пока не сделано, надо спать
 import sys
 
 from diary import storage
@@ -11,10 +10,28 @@ def action_add():
     storage.add_task()
 
 
+def action_find_by_id():
+    print('''Введите id задачи:
+''')
+    if not id:
+        print('''Вы ввели неверный id
+'''
+        action_show_menu()
+    else:
+        storage.add_task()
+
+
 def action_red():
     print('''Редактирование задачи:
 ''')
     storage.red_task()
+
+
+def action_rest():
+    print('''Повторное объявление задачи:
+''')
+    storage.rest_task()
+              
     
 def action_exit_task():
     print('''Завершение задачи:
@@ -27,12 +44,9 @@ def action_find_all():
 ''')
     storage.find_all()
 
-    
-
-
+   
 def action_show_menu():
     print('''Ежедневник. Выберите действие:
-
 1. Вывести список задач
 2. Добавить задачу
 3. Отредактировать задачу
@@ -48,30 +62,24 @@ def action_exit():
     
 
 
-    action_id = input('Введите номер действия: ')
-    if action_id not in ['1', '2', '3', '4', '5', '6']:
-        print('Выбрано неверное действие. Попробуйте снова.\n')
-        menu()
-    else:
-        action_id = int(action_id)
+def main():
+    show_menu()
 
-    if action_id == 1:
-        action_find_all()
-        menu()
-    elif action_id == 2:
-        action_add_task()
-        menu()
-    elif action_id == 3:
-        action_red_task()
-        menu()
-    elif action_id == 4:
-        action_exit_task()
-        menu()
-    elif action_id == 5:
-        action_rest_task()
-        menu()
-    elif action_id == 6:
-        action_exit()
+    actions = {
+        '1': action_find_all,
+        '2': action_add,
+        '3': action_red,
+        '4': action_exit_task,
+        '5': action_rest,
+        '6': action_show_menu,
+        'v': action_exit
+    }
 
-menu()
+    while True:
+        id_action = input('''Введите номер действия: ''')
+        action = actions.get(id_action)
 
+        if action:
+            action()
+        else:
+            print('''Вы ввели неверные данные''')
