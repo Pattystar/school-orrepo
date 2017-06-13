@@ -6,19 +6,22 @@ x = string.digits + string.ascii_letters  # Заносим в переменну
 
 
 
-def get_pass(n):  # Объявление функции 
-    i = 1
-    while i <= n:  # Объявляю условие: порядковый номер элемента (количество циклов) не больше количества элементов.
-        yield random.choice(x) # Генератор выкидывает случайное значение.
-        i += 1  # Объявляю новый цикл.
-      
+def password_generator(n):
+    while 1: 
+        i = 1
+        psw = []
+        while i <= n:  # Объявляю условие: порядковый номер элемента (количество циклов) не больше количества элементов.
+            psw.append(random.choice(x)) # Генератор выкидывает случайное значение.
+            i += 1  # Объявляю новый цикл.
+        yield ''.join(psw)
+            
+
+       
 n = int(input('Введите желаемую длинну пароля: '))
-
-pass_list = [x for x in get_pass(n)]  # Генерирую список символов.
-
-
-password = ''.join([str(i) for i in pass_list])  # Перевожу список символов в строку, формирую пароль
-print(password)
+gen = password_generator(n)
+print('Случайный пароль №1: {}'.format(next(gen)))
+print('Случайный пароль №2: {}'.format(next(gen)))
+print('Случайный пароль №3: {}'.format(next(gen)))
 
 
 

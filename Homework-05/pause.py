@@ -1,17 +1,18 @@
 import time
 
-def dec(func):
-    def wrapper():
-        print('Начало процесса')
-        n = 0
-        pause = int(input('Введтие задержку выполнения программы в секундах:\n'))
-        time.sleep(pause)
-        func()
-        print('Процесс завершён спустя {} сек.'.format(pause))
-    return wrapper
+
+def pause(sec):
+    def dec(func):
+        def wrapper(*args, **kwargs):
+            print('Начало процесса.')
+            time.sleep(3)
+            func(*args, **kwargs)
+            print('Процесс завершён спустя {} сек.'.format(sec))
+        return wrapper
+    return dec
 
 
-@dec
+@pause(3)
 def dinner():
     print('Я опоздал на обед!!!')
 
