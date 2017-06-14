@@ -1,5 +1,3 @@
-
-
 from diary import main
 
 

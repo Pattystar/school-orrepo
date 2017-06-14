@@ -1,6 +1,3 @@
-Python 3.6.1 (v3.6.1:69c0db5, Mar 21 2017, 18:41:36) [MSC v.1900 64 bit (AMD64)] on win32
-Type "copyright", "credits" or "license()" for more information.
->>> 
 import sqlite3
 import os.path as Path
 
@@ -12,27 +9,32 @@ sql = '''
         task_status TEXT NOT NULL,
     )'''  # создал список
 
-SQL_SELECT_ALL =
+SQL_SELECT_ALL ='''
     SELECT task_id, task_text, task_time, task_status
     FROM diary
+    '''
 
 SQL_SELECT_TASK_BY_PK = SQL_SELECT_ALL + ' WHERE task_id=?'
 
-SQL_RED_TASK =
+SQL_RED_TASK ='''
     UPDATE diary
     SET(task_id, task_text, task_time, task_status) + ' WHERE task_id=?'
+    '''
 
-SQL_REST_TASK =
+SQL_REST_TASK ='''
     UPDATE diary
     SET task_status = 'Не выполнено' + ' WHERE task_id=?'
+    '''
 
-SQL_EXIT_TASK =
+SQL_EXIT_TASK ='''
     UPDATE diary
     SET task_status = 'Выполнено' + ' WHERE task_id=?'
+    '''
 
-SQL_INSERT_TASK =
+SQL_INSERT_TASK ='''
     INSERT INTO dairy (task_id, task_text, task_time, task_status)
     VALUES (?, ?, ?, ?)
+    '''
 
 
 def dict_factory(cursor, row):
